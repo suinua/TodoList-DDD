@@ -51,4 +51,16 @@ class TaskListUsecaseService {
     taskList.removeTask(TaskId(id));
     _taskListRepository.update(taskList);
   }
+
+  TaskDTO checkTask(String parentId, String id) {
+    var taskList = _taskListRepository.findById(TaskListId(parentId));
+    var targetTask =
+        taskList.tasks.firstWhere((element) => element.id == TaskId(id));
+    targetTask = Task(
+        id: targetTask.id, text: targetTask.text, isDone: !targetTask.isDone);
+    taskList.updateTask(targetTask);
+    _taskListRepository.update(taskList);
+
+    return TaskDTO(targetTask);
+  }
 }

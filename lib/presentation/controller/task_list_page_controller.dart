@@ -83,10 +83,33 @@ class TaskListPageController {
         .listen((_) {
       _deleteTask(parentId, task.id);
     });
+
+    querySelector('#${TaskHtmlClassName.checkButton + task.id}')
+        .onClick
+        .listen((_) {
+      _checkTask(parentId, task.id);
+    });
   }
 
   void _deleteTask(String parentId, String id) {
     _service.deleteTask(parentId, id);
-    querySelector('#${TaskHtmlClassName.body+id}').remove();
+    querySelector('#${TaskHtmlClassName.body + id}').remove();
+  }
+
+  void _checkTask(String parentId, String id) {
+    var task = _service.checkTask(parentId, id);
+    if (task.isDone) {
+      querySelector('#${TaskHtmlClassName.checkedBox + task.id}')
+          .style
+          .display = '';
+      querySelector('#${TaskHtmlClassName.checkBox + task.id}').style.display =
+          'none';
+    } else {
+      querySelector('#${TaskHtmlClassName.checkedBox + task.id}')
+          .style
+          .display = 'none';
+      querySelector('#${TaskHtmlClassName.checkBox + task.id}').style.display =
+      '';
+    }
   }
 }

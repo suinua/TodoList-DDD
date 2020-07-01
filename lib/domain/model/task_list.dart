@@ -7,25 +7,29 @@ import 'task.dart';
 class TaskList extends AggregateRoot {
   final TaskListId id;
   final title;
-  List<Task> tasks;
+  List<Task> _tasks;
 
-  TaskList({@required this.id, @required this.title, @required this.tasks})
-      : assert(id != null),
+  TaskList({@required this.id, @required this.title, @required List<Task> tasks})
+      : _tasks = tasks,
+        assert(id != null),
         assert(title != null),
         assert(tasks != null);
 
   TaskList.asNew({@required this.title})
       : id = TaskListId.asNew(),
-        tasks = [];
+        _tasks = [];
 
-  void addTask(Task task) => tasks.add(task);
+  List<Task> get tasks => _tasks;
 
-  void removeTask(TaskId id) => tasks.removeWhere((element) => element.id == id);
+  void addTask(Task task) => _tasks.add(task);
+
+  void removeTask(TaskId id) => _tasks.removeWhere((element) => element.id == id);
 
   void updateTask(Task task) {
-    tasks.map((Task e) => (Task e) {
-          e = task;
-        });
+    _tasks = _tasks.map((e){
+      if(e.id == task.id) e = task;
+      return e;
+    }).toList();
   }
 }
 
