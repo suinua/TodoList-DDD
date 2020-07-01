@@ -2,19 +2,16 @@ import 'dart:html';
 
 import 'package:TodoList_DDD/usecase/dto/task_dto.dart';
 
-
 class TaskHtmlConverter {
-  static HtmlElement execute(TaskDTO dto){
-    var taskHtml = DivElement()
-      ..className = TaskHtmlClassName.body
-      ..id = dto.id;
+  static HtmlElement execute(TaskDTO dto) {
+    var html = '''
+<div class="${TaskHtmlClassName.body}" id="${dto.id}">
+ <p>${dto.text}</p>
+ <i class="fas fa-minus-square"></i>
+</div>
+''';
 
-    var text = ParagraphElement()..text = dto.text;
-    taskHtml.insertAdjacentElement('beforeend', text);
-    taskHtml.insertAdjacentHtml(
-        'beforeend', '<i class="fas fa-minus-square"></i>');
-
-    return taskHtml;
+    return Element.html(html);
   }
 }
 
