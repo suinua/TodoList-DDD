@@ -7,7 +7,7 @@ class TaskListJsonAdapter {
     return TaskList(
         id: TaskListId(json['id']),
         title: json['title'],
-        tasks: List<Map>.from(json['elements'])
+        tasks: List<Map>.from(json['tasks'])
             .map((e) => Map<String, dynamic>.from(e))
             .map(TaskJsonAdapter.decode)
             .toList());
@@ -17,7 +17,7 @@ class TaskListJsonAdapter {
     return <String, dynamic>{
       'id': taskList.id.value,
       'title': taskList.title,
-      'elements': taskList.tasks.map(TaskJsonAdapter.encode).toList()
+      'tasks': taskList.tasks.map(TaskJsonAdapter.encode).toList()
     };
   }
 }
