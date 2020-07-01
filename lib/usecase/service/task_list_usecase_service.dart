@@ -45,4 +45,10 @@ class TaskListUsecaseService {
 
     return TaskDTO(newTask);
   }
+
+  void deleteTask(TaskListId parentId,TaskId id) {
+    var taskList = _taskListRepository.findById(parentId);
+    taskList.removeTask(id);
+    _taskListRepository.update(taskList);
+  }
 }

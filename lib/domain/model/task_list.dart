@@ -20,7 +20,7 @@ class TaskList extends AggregateRoot {
 
   void addTask(Task task) => tasks.add(task);
 
-  void removeTask(Task task) => tasks.remove(task);
+  void removeTask(TaskId id) => tasks.removeWhere((element) => element.id == id);
 
   void updateTask(Task task) {
     tasks.map((Task e) => (Task e) {

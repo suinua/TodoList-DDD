@@ -1,12 +1,11 @@
 import 'dart:html';
 
-import 'package:TodoList_DDD/presentation/converter/task_html_converter.dart';
 import 'package:TodoList_DDD/usecase/dto/task_list_dto.dart';
 
 class TaskListHtmlConverter {
   static HtmlElement execute(TaskListDTO dto) {
     var html = '''
-<div class="${TaskListHtmlClassName.body}" id="${dto.id}">
+<div class="${TaskListHtmlClassName.body}" id="${TaskListHtmlClassName.body+dto.id}">
   <div class="title">
     <div class="count">${dto.tasks.length}</div>
     <p class="text">${dto.title}</p>
@@ -24,8 +23,6 @@ class TaskListHtmlConverter {
 ''';
 
     var htmlElement = Element.html(html);
-    var tasksHtmlElement = htmlElement.querySelector('#${TaskListHtmlClassName.tasks + dto.id}');
-    dto.tasks.forEach((element) => tasksHtmlElement.insertAdjacentElement('beforeend', TaskHtmlConverter.execute(element)));
 
     return htmlElement;
   }
