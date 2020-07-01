@@ -7,7 +7,10 @@ class TaskListHtmlConverter {
   static HtmlElement execute(TaskListDTO dto) {
     var html = '''
 <div class="${TaskListHtmlClassName.body}" id="${dto.id}">
-  <div class="title"><p class="text">${dto.title}</p></div>
+  <div class="title">
+    <div class="count">${dto.tasks.length}</div>
+    <p class="text">${dto.title}</p>
+  </div>
   <div class="${TaskListHtmlClassName.tasks}" id="${TaskListHtmlClassName.tasks + dto.id}">   
   </div>
 

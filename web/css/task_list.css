@@ -1,26 +1,78 @@
+.taskListArea {
+    height: 400px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
 
 .taskListArea > .taskList {
     display: inline-block;
-    margin: 0;
-    background: #fdfdfd;
+    float: top;
+    margin: 10px;
+    background: #EFF1F3;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.33);
     border-radius: 0 0 5px 5px;
+    width: 35%;
+    height: 95%;
+}
+
+.taskListArea > .taskList ::-webkit-scrollbar {
+    display: none;
 }
 
 .taskList > .title {
-    padding-left: 2em;
-    padding-right: 2em;
-    background: #f4f4f4;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.taskList > .title > .count {
+    background: #E0E3E6;
+    border-radius: 100px;
+    display: inline-block;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 .taskList > .title > .text {
+    display: inline-block;
     margin: 0;
 }
 
 .taskList > .tasks {
-    padding-left: 0.5em;
+    height: 75%;
+    overflow-y: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
 }
 
-.taskList > .tasks > .task > p{
+.taskList > .tasks > .task {
+    border-radius: 8px;
+    margin: 0.5em;
+    background: #FFFFFF;
+    border: 1px solid #ddd;
+}
+
+.taskList > .tasks > .task > p {
+    margin: 0.5em;
     display: inline-block;
 }
+
+.newTaskForm {
+    margin-top: 1em;
+    margin-left: 0.5em;
+    display: inline-block;
+    height: 30px;
+    width: 100%;
+}
+
+.newTaskForm > .newTaskTextInput {
+    height: 30px;
+    width: 80%;
+}
+
+.newTaskListTitleInput {
+    height: 50px;
+}
+
