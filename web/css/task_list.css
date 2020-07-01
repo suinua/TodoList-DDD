@@ -59,6 +59,20 @@
     display: inline-block;
 }
 
+.taskList > .tasks > .task > .deleteTaskButton {
+    float: right;
+    display: inline-block;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+}
+
+.taskList > .tasks > .task > .checkTaskButton {
+    display: inline-block;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
 .newTaskForm {
     margin-top: 1em;
     margin-left: 0.5em;
