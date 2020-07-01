@@ -1,7 +1,5 @@
 import 'dart:html';
 
-import 'package:TodoList_DDD/domain/model/task.dart';
-import 'package:TodoList_DDD/domain/model/task_list.dart';
 import 'package:TodoList_DDD/presentation/converter/task_html_converter.dart';
 import 'package:TodoList_DDD/presentation/converter/task_list_html_converter.dart';
 import 'package:TodoList_DDD/usecase/dto/task_dto.dart';
@@ -68,7 +66,7 @@ class TaskListPageController {
 
   void addNewTask(String id) {
     var text = _getNewTaskText(id);
-    var task = _service.addTask(TaskListId(id), text);
+    var task = _service.addTask(id, text);
 
     _addTask(id, task);
   }
@@ -88,7 +86,7 @@ class TaskListPageController {
   }
 
   void _deleteTask(String parentId, String id) {
-    _service.deleteTask(TaskListId(parentId), TaskId(id));
+    _service.deleteTask(parentId, id);
     querySelector('#${TaskHtmlClassName.body+id}').remove();
   }
 }

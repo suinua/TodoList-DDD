@@ -37,18 +37,18 @@ class TaskListUsecaseService {
     _taskListRepository.update(taskList);
   }
 
-  TaskDTO addTask(TaskListId id, String text) {
+  TaskDTO addTask(String id, String text) {
     var newTask = Task.asNew(text: text);
-    var taskList = _taskListRepository.findById(id);
+    var taskList = _taskListRepository.findById(TaskListId(id));
     taskList.addTask(newTask);
     _taskListRepository.update(taskList);
 
     return TaskDTO(newTask);
   }
 
-  void deleteTask(TaskListId parentId,TaskId id) {
-    var taskList = _taskListRepository.findById(parentId);
-    taskList.removeTask(id);
+  void deleteTask(String parentId, String id) {
+    var taskList = _taskListRepository.findById(TaskListId(parentId));
+    taskList.removeTask(TaskId(id));
     _taskListRepository.update(taskList);
   }
 }
