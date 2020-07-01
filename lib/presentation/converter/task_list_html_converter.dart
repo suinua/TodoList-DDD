@@ -5,10 +5,10 @@ import 'package:TodoList_DDD/usecase/dto/task_list_dto.dart';
 
 class TaskListHtmlConverter {
   static HtmlElement execute(TaskListDTO dto) {
-    var group = DivElement()..className = TaskListHtmlClassName.body;
-    var titleHtml = DivElement()
-      ..className = TaskListHtmlClassName.title
+    var group = DivElement()
+      ..className = TaskListHtmlClassName.body
       ..id = dto.id;
+    var titleHtml = DivElement()..className = TaskListHtmlClassName.title;
 
     var titleTextHtml = ParagraphElement()
       ..className = 'text'
@@ -17,21 +17,38 @@ class TaskListHtmlConverter {
     titleHtml.insertAdjacentElement('beforeend', titleTextHtml);
     group.insertAdjacentElement('beforeend', titleHtml);
 
-    var tasksHtml = DivElement()..className = TaskListHtmlClassName.tasks;
+    var tasksHtml = DivElement()
+      ..className = TaskListHtmlClassName.tasks
+      ..id = TaskListHtmlClassName.tasks + dto.id;
 
     dto.tasks.forEach((element) => tasksHtml.insertAdjacentElement(
         'beforeend', TaskHtmlConverter.execute(element)));
 
-
-    var addTaskButton = AnchorElement()
-      ..className = TaskListHtmlClassName.addTaskButton
-      ..id = dto.id;
-
     group.insertAdjacentElement('beforeend', tasksHtml);
-    addTaskButton.insertAdjacentHtml('beforeend', '<i class="fas fa-plus-circle"></i>');
-    group.insertAdjacentElement('beforeend', addTaskButton);
+    group.insertAdjacentElement('beforeend', _buildNewTaskFormElement(dto));
 
     return group;
+  }
+
+  static HtmlElement _buildNewTaskFormElement(TaskListDTO dto) {
+    var newTaskFormElement = DivElement()
+      ..className = TaskListHtmlClassName.newTaskForm
+      ..id = TaskListHtmlClassName.newTaskForm + dto.id;
+
+    var newTaskTextInput = InputElement(type: 'text')
+      ..className = TaskListHtmlClassName.newTaskTextInput
+      ..id = TaskListHtmlClassName.newTaskTextInput + dto.id;
+    newTaskFormElement.insertAdjacentElement('beforeend', newTaskTextInput);
+
+    var addNewTaskButton = AnchorElement()
+      ..className = TaskListHtmlClassName.addTaskButton
+      ..id = TaskListHtmlClassName.addTaskButton + dto.id;
+
+    addNewTaskButton.insertAdjacentHtml(
+        'beforeend', '<i class="fas fa-plus-circle"></i>');
+    newTaskFormElement.insertAdjacentElement('beforeend', addNewTaskButton);
+
+    return newTaskFormElement;
   }
 }
 
@@ -39,5 +56,7 @@ class TaskListHtmlClassName {
   static final body = 'taskList';
   static final title = 'title';
   static final tasks = 'tasks';
-  static final addTaskButton = 'addTaskButton';
+  static final newTaskForm = 'newTaskForm';
+  static final newTaskTextInput = 'newTaskTextInput';
+  static final addTaskButton = 'addNewTaskButton';
 }

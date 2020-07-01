@@ -28,12 +28,20 @@ class WebStorageTaskListRepository extends TaskListRepository {
 
   @override
   void delete(TaskList taskList) {
-    // TODO: implement delete
+    var all = getAll();
+    all.asMap().removeWhere((key,value) {
+      return value.id == taskList.id;
+    });
+    window.localStorage['task_list'] =
+        json.encode(all.map((e) => TaskListJsonAdapter.encode(e)).toList());
   }
 
   @override
   TaskList findById(TaskListId taskListId) {
-    return null;
+    var all = getAll();
+    var hit = all.where((element) => element.id == taskListId).toList();
+    if (hit.isEmpty) return null;
+    return hit.first;
   }
 
   @override
@@ -46,6 +54,18 @@ class WebStorageTaskListRepository extends TaskListRepository {
 
   @override
   void update(TaskList taskList) {
-    // TODO: implement update
+    int index;
+    var all = getAll();
+
+    var i = 0;
+    all.removeWhere((value) {
+      if (value.id == taskList.id) index = i;
+      i++;
+      return value.id == taskList.id;
+    });
+
+    all.insert(index, taskList);
+    window.localStorage['task_list'] =
+        json.encode(all.map((e) => TaskListJsonAdapter.encode(e)).toList());
   }
 }

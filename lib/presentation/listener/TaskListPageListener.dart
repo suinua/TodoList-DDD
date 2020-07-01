@@ -6,7 +6,9 @@ class TaskListPageListener {
   final TaskListPageController _controller = const TaskListPageController();
 
   TaskListPageListener() {
-    querySelector('#addTaskListButton').onClick.listen(onClickAddTaskListButton);
+    querySelector('#addTaskListButton')
+        .onClick
+        .listen(onClickAddTaskListButton);
     window.onContentLoaded.listen(onLoad);
   }
 
@@ -17,5 +19,9 @@ class TaskListPageListener {
   void onClickAddTaskListButton(_) {
     _controller.addNewTaskList();
     _controller.resetNewTaskListTitleInput();
+  }
+
+  void onClickAddTaskButton(Event event) {
+    print(event.matchingTarget.parent.id);
   }
 }

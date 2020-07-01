@@ -1,35 +1,48 @@
+import 'package:TodoList_DDD/domain/model/task.dart';
 import 'package:TodoList_DDD/domain/model/task_list.dart';
 import 'package:TodoList_DDD/infra/repository/web_storage_task_list_repository.dart';
 import 'package:TodoList_DDD/infra/service/add_task_list_service.dart';
+import 'package:TodoList_DDD/usecase/dto/task_dto.dart';
 import 'package:TodoList_DDD/usecase/dto/task_list_dto.dart';
 
 class TaskListUsecaseService {
-  static const WebStorageTaskListRepository _repository = WebStorageTaskListRepository();
-  static const AddTaskListService _addTaskListService = AddTaskListService(_repository);
+  static const WebStorageTaskListRepository _taskListRepository =
+      WebStorageTaskListRepository();
+  static const AddTaskListService _addTaskListService =
+      AddTaskListService(_taskListRepository);
 
   const TaskListUsecaseService();
 
-  TaskListDTO add(String title) {
+  TaskListDTO addNewTaskList(String title) {
     var taskList = TaskList.asNew(title: title);
     _addTaskListService.execute(taskList);
 
     return TaskListDTO(taskList);
   }
 
-  void delete(TaskList taskList) {
-    _repository.delete(taskList);
+  void deleteTaskList(TaskList taskList) {
+    _taskListRepository.delete(taskList);
   }
 
-  TaskListDTO findById(TaskListId taskListId) {
-    var taskList = _repository.findById(taskListId);
+  TaskListDTO findTaskListById(TaskListId taskListId) {
+    var taskList = _taskListRepository.findById(taskListId);
     return TaskListDTO(taskList);
   }
 
-  List<TaskListDTO> getAll() {
-    return _repository.getAll().map((e) => TaskListDTO(e)).toList();
+  List<TaskListDTO> getAllTaskList() {
+    return _taskListRepository.getAll().map((e) => TaskListDTO(e)).toList();
   }
 
-  void update(TaskList taskList) {
-    _repository.update(taskList);
+  void updateTaskList(TaskList taskList) {
+    _taskListRepository.update(taskList);
+  }
+
+  TaskDTO addTask(TaskListId id, String text) {
+    var newTask = Task.asNew(text: text);
+    var taskList = _taskListRepository.findById(id);
+    taskList.addTask(newTask);
+    _taskListRepository.update(taskList);
+
+    return TaskDTO(newTask);
   }
 }
