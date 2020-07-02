@@ -98,18 +98,9 @@ class TaskListPageController {
 
   void _checkTask(String parentId, String id) {
     var task = _service.checkTask(parentId, id);
-    if (task.isDone) {
-      querySelector('#${TaskHtmlClassName.checkedBox + task.id}')
-          .style
-          .display = '';
-      querySelector('#${TaskHtmlClassName.checkBox + task.id}').style.display =
-          'none';
-    } else {
-      querySelector('#${TaskHtmlClassName.checkedBox + task.id}')
-          .style
-          .display = 'none';
-      querySelector('#${TaskHtmlClassName.checkBox + task.id}').style.display =
-      '';
-    }
+    querySelector('#${TaskHtmlClassName.checkedBox + task.id}').style.display =
+        task.isDone ? '' : 'none';
+    querySelector('#${TaskHtmlClassName.checkBox + task.id}').style.display =
+        task.isDone ? 'none' : '';
   }
 }

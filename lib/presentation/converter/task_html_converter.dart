@@ -5,7 +5,7 @@ import 'package:TodoList_DDD/usecase/dto/task_dto.dart';
 class TaskHtmlConverter {
   static HtmlElement execute(TaskDTO dto) {
     var html = '''
-<div class="${TaskHtmlClassName.body}" id="${TaskHtmlClassName.body+dto.id}">
+<div class="${TaskHtmlClassName.body}" id="${TaskHtmlClassName.body + dto.id}">
  <div class="${TaskHtmlClassName.checkButton}" id="${TaskHtmlClassName.checkButton + dto.id}">
   <i class="far fa-square" id="${TaskHtmlClassName.checkBox + dto.id}"></i>
   <i class="far fa-check-square"  id="${TaskHtmlClassName.checkedBox + dto.id}"></i>
@@ -20,7 +20,11 @@ class TaskHtmlConverter {
     htmlElement
         .querySelector('#${TaskHtmlClassName.checkedBox + dto.id}')
         .style
-        .display = 'none';
+        .display = dto.isDone ? '' : 'none';
+    htmlElement
+        .querySelector('#${TaskHtmlClassName.checkBox + dto.id}')
+        .style
+        .display = dto.isDone ? 'none' : '';
 
     return htmlElement;
   }
